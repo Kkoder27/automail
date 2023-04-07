@@ -1,6 +1,6 @@
 import ezgmail, re, time
-
-while True:
+check = True
+while check:
     recThreads = ezgmail.recent()
     findEmail = re.compile(r'<(.*)@(.*)>')
     i = 0
@@ -14,5 +14,7 @@ while True:
             replyContent = 'I am now doing ' + ' '.join(subEval)
             ezgmail.send(replyAddress, replyContent, replyContent)
             ezgmail._trash(recThreads[i])
+        if subEval[0] == 'ENDTASK':
+            check = False
         i += 1
     time.sleep(60)
